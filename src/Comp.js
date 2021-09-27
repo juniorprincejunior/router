@@ -8,49 +8,66 @@ import { Link} from 'react-router-dom';
 
 
 
+export const data =  [{
+    title: 'Charmed',
+    description: 'trop cool',
+    commentaire: 'cool',
+    posteURL: "https://flxt.tmsimg.com/assets/p15533415_b_v13_aj.jpg",
+    anonce: "https://www.youtube.com/embed/NdGL6jxxxwA",
+    
+},
+
+{
+    title: 'Flash',
+    description: 'trop cool',
+    commentaire: 'cool',
+    posteURL: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSuOcdPJ7-wIXV9M8exVo2yZd2lxmCK3NtVQ&usqp=CAU",
+    anonce: "https://www.youtube.com/embed/OU5vQnIcn4w",
+    
+},
+
+
+{
+    title: 'Casa De Papel',
+    description: 'trop cool',
+    commentaire: 'cool',
+    posteURL: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQJhePtXUwt5T7xn_lzPD_ZV9z_JKGOIdNXQ&usqp=CAU",
+    anonce: "https://www.youtube.com/embed/SGMZhdNdxM4",
+    
+}
+
+]
+
+
+
+
+
 
 export const Comp = () => {
 
-    const [movie, setMovie] = useState([
-        {
-            title: 'Charmed',
-            description: 'trop cool',
-            commentaire: 'cool',
-            posteURL: "https://flxt.tmsimg.com/assets/p15533415_b_v13_aj.jpg",
-            anonce: "https://www.youtube.com/embed/NdGL6jxxxwA"
-        },
-
-        {
-            title: 'Flash',
-            description: 'trop cool',
-            commentaire: 'cool',
-            posteURL: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSuOcdPJ7-wIXV9M8exVo2yZd2lxmCK3NtVQ&usqp=CAU",
-            anonce: "https://www.youtube.com/embed/OU5vQnIcn4w"
-        },
-
-
-        {
-            title: 'Casa De Papel',
-            description: 'trop cool',
-            commentaire: 'cool',
-            posteURL: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQJhePtXUwt5T7xn_lzPD_ZV9z_JKGOIdNXQ&usqp=CAU",
-            anonce: "https://www.youtube.com/embed/SGMZhdNdxM4"
-        }
-        
-    ])
+    const [movie, setMovie] = useState(data)
+    
     
 
 
-
-
-    
-
-    const addTitle = (title, posteURL, description, commentaire) => {
-        const newtitle = [...movie, { title, posteURL, description, commentaire }];
+    const addTitle = (title, posteURL, description, commentaire, anonce) => {
+        const newtitle = [...movie, { title, posteURL, description, commentaire, anonce }];
     setMovie(newtitle)
     }
 
-
+    const func1= (index)=> {
+        
+        const new1 = movie[index];
+        
+      
+        
+        return new1
+        
+    }
+    
+   
+    
+    
     
 
 
@@ -63,6 +80,7 @@ export const Comp = () => {
         const [photo, setPhoto] = useState('')
         const [description, setDescription] = useState('')
         const [commentaire, setCommentaire] = useState('')
+        const [anonce, setAnonce] = useState('')
         const add = e => {
             e.preventDefault()
             if (!value || !photo || !description || !commentaire) return;
@@ -71,6 +89,7 @@ export const Comp = () => {
             setValue('')
             setDescription('')
             setCommentaire('')
+            setAnonce('')
         }
     
 
@@ -80,6 +99,7 @@ export const Comp = () => {
                 <input style={{ width: '50%', textAlign: 'center' }} className='form-control' type="text" placeholder="Photo" value={photo} onChange={e => setPhoto(e.target.value)} />
                 <input style={{ width: '50%', textAlign: 'center' }} className='form-control' type="text" placeholder="Description" value={description} onChange={e => setDescription(e.target.value)} />
                 <input style={{ width: '50%', textAlign: 'center' }} className='form-control' type="text" placeholder="Commentaire" value={commentaire} onChange={e => setCommentaire(e.target.value)} />
+                <input style={{ width: '50%', textAlign: 'center' }} className='form-control' type="text" placeholder="youtube url" value={anonce} onChange={e => setAnonce(e.target.value)} />
                 <button style={{ width: '50%', textAlign: 'center' }} className="btn btn-primary" onClick={add}>ajouter</button>
     
             </form>
@@ -93,7 +113,8 @@ export const Comp = () => {
 
     function Search() {
 
-
+        
+        
         const [searchTerm, setSearchTerm] = React.useState("");
     
         const handleChange = event => {
@@ -141,9 +162,12 @@ export const Comp = () => {
         //console.log(title)
 
         //Object.values(movie)
+
         
         
-   
+
+        
+        
        
 
         return (
@@ -151,10 +175,10 @@ export const Comp = () => {
             <div>
                 <input className='form-control container' type="text" placeholder="Search by title" value={searchTerm} onChange={handleChange} />
                 <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'row', textAlign: 'center', flexWrap: 'wrap' }} >
-                    {results.map((mov, index) => (
+                {results.map((mov, index) => (
                         <div key={index}>
                             {/*<Link  to={"/"}>*/}
-                            <Link onClick={() => { func1(index) }} to='/'>
+                            <Link onClick={() => { func1(index) }} to={`/Desc/${movie[index].title}/${index}`}>
                                 <img style={{ margin: '10px', width: '300px', height: '300px' }} alt='ok' src={mov.posteURL} />
                         
                                 {/*<Title key={index} index={index}  mov={mov}/>*/}
@@ -168,39 +192,25 @@ export const Comp = () => {
             </div>
         )
         
-    
-       
     }
 
     //: return <div>movie[index].title</div>;
-
-
-    const func1 = (index) => {
-        var tab = {
-            URL: movie[index].anonce
-        }
-        //tu dois recuperer l'objet dont le titre match avec l'index
-        //tu le stock dans une variable
-        //ensuite tu affiche les element de ce tableau
-        //console.log(Object.keys(movie));
-    }
+   
     
-
-
-        return (
+   
+   
+        return(
             <div >
-                <Search />
-                <Form />
-            <input type="text" />
+                    <p style={{fontSize : '50px' , color :'blue', textAlign:'center'}}>Films et Séries</p> 
+                    <Search />
+                    <Form />
             </div>
         )
-    
+
 
 
 
 }
-
-
 
 
 export default Comp
